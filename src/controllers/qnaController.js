@@ -1,6 +1,6 @@
-import db from '../models/db.js'
+const db = require('../models/db')
 
-export const submitQuestion = (req, res) => {
+const submitQuestion = (req, res) => {
 	if (!req.body || !req.body.title || !req.body.content || !req.body.author) {
 		return res
 			.status(400)
@@ -17,14 +17,14 @@ export const submitQuestion = (req, res) => {
 	})
 }
 
-export const getAllQuestions = (req, res) => {
+const getAllQuestions = (req, res) => {
 	db.query('SELECT * FROM qna ORDER BY id DESC', (err, results) => {
 		if (err) return res.status(500).json({ error: err })
 		res.status(200).json(results)
 	})
 }
 
-export const addComment = (req, res) => {
+const addComment = (req, res) => {
 	const qnaId = req.params.id
 	const { user, text } = req.body
 	const query =
@@ -41,7 +41,7 @@ export const addComment = (req, res) => {
 	})
 }
 
-export const incrementView = (req, res) => {
+const incrementView = (req, res) => {
 	const qnaId = req.params.id
 	const query = 'UPDATE qna SET views = views + 1 WHERE id = ?'
 	db.query(query, [qnaId], err => {
@@ -50,7 +50,7 @@ export const incrementView = (req, res) => {
 	})
 }
 
-export const getSingleQuestion = (req, res) => {
+const getSingleQuestion = (req, res) => {
 	const qnaId = req.params.id
 	const query = 'SELECT * FROM qna WHERE id = ?'
 
@@ -59,7 +59,6 @@ export const getSingleQuestion = (req, res) => {
 		if (qnaResult.length === 0)
 			return res.status(404).json({ error: 'Not found' })
 
-		// Commentlarni olib kelish
 		const commentQuery =
 			'SELECT * FROM comments WHERE qna_id = ? ORDER BY createdAt ASC'
 		db.query(commentQuery, [qnaId], (err, commentsResult) => {
@@ -71,4 +70,12 @@ export const getSingleQuestion = (req, res) => {
 			})
 		})
 	})
+}
+
+module.exports = {
+	submitQuestion,
+	getAllQuestions,
+	addComment,
+	incrementView,
+	getSingleQuestion,
 }

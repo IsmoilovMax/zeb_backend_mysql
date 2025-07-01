@@ -1,11 +1,11 @@
-import express from 'express'
-import {
+const express = require('express')
+const {
 	addComment,
 	getAllQuestions,
 	getSingleQuestion,
 	incrementView,
 	submitQuestion,
-} from '../controllers/qnaController.js'
+} = require('../controllers/qnaController')
 
 const router = express.Router()
 
@@ -15,4 +15,4 @@ router.post('/:id/comment', addComment)
 router.post('/:id', getSingleQuestion)
 router.patch('/:id/view', incrementView)
 
-export default router
+module.exports = router

@@ -1,13 +1,15 @@
-import cors from 'cors'
-import dotenv from 'dotenv'
-import express from 'express'
+const cors = require('cors')
+const dotenv = require('dotenv')
+const express = require('express')
+
 dotenv.config()
 
-import qnaRoutes from './routes/qnaRoutes.js'
+const qnaRoutes = require('./src/routes/qnaRoutes')
 
 const app = express()
 app.use(cors())
 app.use(express.json())
+app.use(express.static('dist'))
 
 app.use('/api/qna', qnaRoutes)
 
