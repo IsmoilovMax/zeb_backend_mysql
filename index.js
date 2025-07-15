@@ -7,6 +7,7 @@ require('dotenv').config()
 const qnaRoutes = require('./src/routes/qnaRoutes')
 const uploadRoutes = require('./src/routes/uploadRoutes')
 const authRoutes = require('./src/routes/auth')
+const noticeRoutes = require('./src/routes/noticeRoutes')
 
 const app = express()
 
@@ -17,6 +18,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 app.use(express.static(path.join(__dirname, 'dist')))
 
 app.use('/api/qna', qnaRoutes)
+app.use('/api/notice', noticeRoutes)
 app.use('/api/upload', uploadRoutes)
 app.use('/api/auth', authRoutes)
 
